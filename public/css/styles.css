@@ -1,0 +1,26 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 10px 50px 10px 50px;
+    font-weight: bold;
+    font-family: sans-serif;
+    height: 50px;
+}
+
+.menu_desktop {
+    display: flex;
+    gap: 25px;
+}
+
+.menu_right {
+    display: flex;
+    gap: 24px;
+}
+
+
+body {
+    background: #000000f0;
+}
