@@ -1,3 +1,71 @@
+
+@font-face {
+    font-display: swap;
+    font-family: StreetLCG2;
+    font-style: normal;
+    font-weight: 200;
+    src: url(../fonts/StreetLCG2-Thin.e5a4c07949651084cc9773919df782f3.sha.woff2) format("woff2")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: StreetLCG2;
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts) format("woff2")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: StreetLCG2;
+    font-style: normal;
+    font-weight: 500;
+    src: url(../fonts/StreetLCG2-Medium.d02aab86eb5290da7f0dce9e59ad6f41.sha.woff2) format("woff2")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: cinecav-casual-regular;
+    src: url(../fonts/cinecav-casual-regular.746864bb267a2afaf2c2e78ade4ffdeb.sha.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: cinecav-mono-regular;
+    src: url(../fonts/cinecav-mono-regular.f75c8cf01af26dc676adab86e16bbb57.sha.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: cinecav-sans-regular;
+    src: url(../fonts/cinecav-sans-regular.7635564f3860df2db7b7b0e1b337971c.sha.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: cinecav-script-regular;
+    src: url(../fonts/cinecav-script-regular.a69eafab179a5b14288c778a2716ea12.sha.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "cinecav-serif-regular";
+    src: url(../fonts/cinecav-serif-regular.1dfa9a9f705c1bfcbe410f8ced2688c2.sha.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: cinecav-small-caps-regular;
+    src: url(../fonts/cinecav-small-caps-regular.e14a94c695c73bc4c117104555a22793.sha.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: cinecav-type-regular;
+    src: url(../fonts/cinecav-type-regular.ccbf50022aa57069f092e432d6cc5a2c.sha.ttf) format("truetype")
+}
+
+
 .header {
     display: flex;
     flex-direction: row;
@@ -8,11 +76,15 @@
     font-weight: bold;
     font-family: sans-serif;
     height: 50px;
+    box-shadow: inset 0 0 10px rgb(205 66 66 / 50%);
 }
 
 .menu_desktop {
     display: flex;
     gap: 25px;
+    font-family: StreetLCG2;
+    font-weight: 500;
+    color: rgb(255 255 255 / 80%);
 }
 
 .menu_right {
@@ -23,4 +95,37 @@
 
 body {
     background: #000000f0;
+    margin: 0;
+}
+
+.preview {
+    background-image: url('/img/acuaman_preview.webp');
+    /* Ajusta el tamaño de la imagen al div */
+    background-size: cover;
+    /* Centra la imagen en el div */
+    background-position: center;
+    /* Opcional: si deseas que la imagen se repita */
+    background-repeat: no-repeat;
+    height: 802px;
+    margin-top: -71px;
+    box-shadow: inset 0 0 234px rgb(0 0 0);
+}
+
+.logo {
+}
+
+.logo img {
+    width: 111px;
+}
+
+.search img {
+    width: 25px;
+}
+
+.favorite img {
+    width: 26px;
+}
+
+.avatar img {
+    width: 32px;
 }
