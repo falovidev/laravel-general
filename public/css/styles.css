@@ -12,7 +12,7 @@
     font-family: StreetLCG2;
     font-style: normal;
     font-weight: 400;
-    src: url(../fonts) format("woff2")
+    src: url(../fonts/StreetLCG2-Book.e6c3ed1fa55e26add9534298fea6b3a4.sha.woff2) format("woff2")
 }
 
 @font-face {
@@ -99,16 +99,13 @@ body {
 }
 
 .preview {
-    background-image: url('/img/acuaman_preview.webp');
-    /* Ajusta el tamaño de la imagen al div */
     background-size: cover;
-    /* Centra la imagen en el div */
     background-position: center;
-    /* Opcional: si deseas que la imagen se repita */
     background-repeat: no-repeat;
-    height: 802px;
+    height: 717px;
     margin-top: -71px;
     box-shadow: inset 0 0 234px rgb(0 0 0);
+    background-image: linear-gradient(to top, rgb(0 0 0), rgb(245 245 245 / 0%));
 }
 
 .logo {
@@ -128,4 +125,87 @@ body {
 
 .avatar img {
     width: 32px;
+}
+
+.hbo_logo img {
+    width: 35px;
+    margin-top: -4px;
+}
+
+.userList {
+    height: 503px;
+    background: black;
+}
+
+.container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .top,
+  .bottom {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+  }
+  
+  .top {
+    background: linear-gradient(to top, rgb(0 0 0), rgb(255 255 255));
+  }
+  
+  .bottom {
+    top: 50%;
+    background: linear-gradient(to top, rgb(205 205 205 / 0%), rgb(255 255 255));
+  }
+  
+
+.container_preview {
+    background-image: url('/img/acuaman_preview.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.imge_title {
+}
+
+.img_title img {
+    width: 573px;
+}
+
+.preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: flex-start;
+    padding-left: 50px;
+    gap: 9px;
+}
+
+.metaData {
+    color: white;
+    display: flex;
+    gap: 12px;
+    font-family: 'StreetLCG2';
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.description {
+    color: white;
+    font-family: 'StreetLCG2';
+    font-size: 16px;
+    width: 573px;
+}
+
+button.goto {
+    padding: 10px 20px 10px 20px;
+    border-radius: 8px;
+    background: #2a303f;
+    color: white;
+    border: 0;
+    font-family: 'StreetLCG2';
+    font-weight: 500;
+    font-size: 15px;
 }
