@@ -25,6 +25,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/max/{nombrePelicula}', function ($nombrePelicula) {
+    return view('play',['nombre' => $nombrePelicula]);
+});
 Route::get('/max', function () {
-    return view('max');
+    return view('max',['nombre' => '']);
 });
