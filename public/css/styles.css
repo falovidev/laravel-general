@@ -94,9 +94,9 @@
 
 
 body {
-    background: #000000f0;
+    background: black;
     margin: 0;
-    padding-left: 50px;
+    /* padding-left: 50px; */
 }
 
 .preview {
@@ -139,6 +139,7 @@ body {
     display: flex;
     flex-wrap: nowrap;
     gap: 20px;
+    padding-left: 50px;
 }
 
 .container {
@@ -183,7 +184,7 @@ body {
     flex-direction: column;
     justify-content: flex-end;
     align-content: flex-start;
-    /* padding-left: 50px; */
+    padding-left: 50px;
     gap: 9px;
 }
 
@@ -222,11 +223,13 @@ button.goto {
     color: white;
     font-family: 'StreetLCG2';
     font-weight: 500;
+    padding-left: 50px;
 }
 
 .forYou {
     margin-top: 118px;
     margin-bottom: 9px;
+    padding-left: 50px;
 }
 
 .continueWatching {
@@ -241,12 +244,12 @@ img {}
 }
 
 .progress {
-    background-color: #8a91c7;
+    background-color: white;
     height: 2px;
 }
 
 .bar {
-    background-color: #8a91c7;
+    background-color: white;
     opacity: 0.5;
     width: 27%;
 }
@@ -266,6 +269,7 @@ svg.play {
 
 .video.cw {
     width: 265px;
+    min-width: 265px;
     height: 154px;
     display: flex;
     flex-direction: column;
@@ -278,11 +282,12 @@ svg.play {
 .buttons {
     display: flex;
     gap: 15px;
+    margin-top: 20px;
 }
 
 .play button {
     background-color: white;
-    padding: 15px 150px 15px 150px;
+    padding: 14px 140px 14px 140px;
     border-radius: 8px;
     border: 0;
     font-family: 'StreetLCG2';
@@ -292,7 +297,7 @@ svg.play {
 
 .restart button {
     background-color: #282e3e;
-    padding: 20px 150px 20px 150px;
+    padding: 18px 150px 18px 150px;
     border-radius: 8px;
     color: white;
     border: 0;
@@ -332,7 +337,7 @@ svg.play {
     background: #282e3e;
 }
 
-.favorite {
+.favorite.add {
     margin-top: 14px;
 }
 
@@ -350,4 +355,18 @@ svg.play {
 
 .rStart {
     margin-bottom: 7px;
+}
+
+.buttonReStart {
+    display: flex;
+    gap: 12px;
+}
+
+.progress__Play {
+    background: #2e55ff;
+    height: 2px;
+}
+
+.bar__Play {
+    background: #b1bad5;
 }
