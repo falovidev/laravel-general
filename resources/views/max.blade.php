@@ -15,23 +15,28 @@
 
     @include('_header')
 
-    <div class="container_preview">
+    @php
+        use Illuminate\Support\Arr;
+        $randomVideo = Arr::random($videos->toArray());
+    @endphp
+
+    <div class="container_preview" style="background-image: url('/img/{{ $randomVideo['name'] }}_preview.webp');">
         <div class="preview">
         
             <div class="imge_title">
-                <div class="img_title"><img src="{{ asset('img/acuaman_title.webp') }}" alt=""></div>
+                <div class="img_title"><img src="{{ asset('img/'.$randomVideo['name'].'_title.webp') }}" alt=""></div>
             </div>
 
             <div class="metaData">
-                <div class="clasification">13+</div>
-                <div class="year">2023</div>
+                <div class="clasification">{{$randomVideo['age']}}+</div>
+                <div class="year">{{$randomVideo['year']}}</div>
             </div>
             <div class="description">
-                Jason Momoa encarna nuevamente al superhéroe Aquaman, quien debe unir fuerzas con su hermano Orm para salvar a su familia de un poderoso enemigo.
+               {{$randomVideo['review']}}
             </div>
 
             <div class="button">
-                <button class="goto">Ir a la pelicula</button>
+                <a href="/{{$randomVideo['id']}}"><button class="goto">Ir a la pelicula</button></a>
             </div>
 
         </div>
@@ -39,14 +44,13 @@
 
     <div class="subTitle forYou">Películas para ti</div>
     <div class="userList">
-        <div class="video"><img src="{{ asset('img/acuaman_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/duna_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/megamente_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/wonka_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/barbie_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/elPodcast_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/elExorsita_poster.webp') }}"></div>
-        <div class="video"><img src="{{ asset('img/pokemon_poster.webp') }}"></div>
+
+    @foreach ($videos as $video )
+    <div class="video"><img src="{{ asset('img/'.$video->name.'_poster.webp') }}"></div>
+        
+    @endforeach
+
+
     </div>
 
     <div class="subTitle continueWatching">Continuar viendo</div>

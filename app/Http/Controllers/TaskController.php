@@ -13,10 +13,10 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
-    public function create()
-    {
-        return view('tasks.create');
-    }
+    // public function create()
+    // {
+    //     return view('tasks.create');
+    // }
 
     public function store(Request $request)
     {

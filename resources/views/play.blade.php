@@ -15,11 +15,11 @@
 
     @include('_header')
 
-    <div class="container_preview">
+    <div class="container_preview" style="background-image: url('/img/{{ $videos->name }}_preview.webp');">
         <div class="preview pPlay">
 
             <div class="imge_title">
-                <div class="img_title"><img src="{{ asset('img/' . ($nombre ? $nombre : '') .'_title.webp') }}" alt=""></div>
+                <div class="img_title"><img src="{{ asset('img/'.$videos->name.'_title.webp') }}" alt=""></div>
             </div>
 
             <div class="metaData">
@@ -91,7 +91,8 @@
                 </button>
             </div>
             <div class="description inPlay">
-                Jason Momoa encarna nuevamente al superhéroe Aquaman, quien debe unir fuerzas con su hermano Orm para salvar a su familia de un poderoso enemigo.
+            {{$videos->review}}
+
             </div>
 
 
