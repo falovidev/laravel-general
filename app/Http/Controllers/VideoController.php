@@ -7,47 +7,143 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
+        $vista='any';
+        $videos = Video::selectRaw('max.videos.*, 
+            CASE 
+                WHEN type = 1 THEN "serie" 
+                WHEN type = 2 THEN "pelicula" 
+                ELSE "otro"
+            END as tipo')
+            ->get();
 
-        $videos = Video::all();//all() seleciona toda la tabla
-        return view('max', compact('videos'));//compact pasa los datos a la vista con el metodo view()
+        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'Solo para ti'],);
         
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($video_id)
     {
         //
         $videos = Video::find($video_id);//all() seleciona toda la tabla
 
-       // var_dump($videos);
 
         return view('play', compact('videos'));//compact pasa los datos a la vista con el metodo view()
 
     }
+
+
+    public function series()
+    {
+
+        $categoryName = 'series'; 
+        $videos = Video::with('categories')->whereHas('categories', function($query) use ($categoryName) {
+            $query->where('category_name', $categoryName);
+        })->get();
+
+        
+
+        return view('max', ['videos' => $videos, 'vista' => 'serie','typeforYou' => 'Series para ti']);
+
+    }
+
+    public function movies()
+    {
+
+        $categoryName = 'movies'; 
+
+
+        $videos = Video::with('categories')->whereHas('categories', function($query) use ($categoryName) {
+            $query->where('category_name', $categoryName);
+        })->get();
+
+        
+
+        return view('max', ['videos' => $videos, 'vista' => 'película', 'typeforYou' => 'Peliculas para ti']);
+
+    }
+
+
+    public function peliculas()
+    {
+
+        $videos = Video::all();
+
+        $vista= 'peliculas';
+        return view('max', compact('videos'))->with('vista', $vista);
+
+    }
+
+
+    public function hbo()
+    {
+        $vista='any';
+        $categoryName = 'hbo'; 
+        $videos = Video::selectRaw('max.videos.*, 
+            CASE 
+                WHEN type = 1 THEN "serie" 
+                WHEN type = 2 THEN "pelicula" 
+                ELSE "otro"
+            END as tipo')
+            ->join('max.video_category as vc', 'max.videos.videoid', '=', 'vc.videoid')
+            ->join('max.type_category as tc', 'vc.categoryid', '=', 'tc.categoryid')
+            ->with('categories')
+            ->where('category_name', $categoryName)
+            ->get();
+      //  return response()->json($videos);
+
+        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'HBO para ti'],);//compact('videos'))->with('vista', $vista);//compact pasa los datos a la vista con el metodo view()
+        
+
+    }
+
+
+    public function  childAndFamily()
+    {
+        $vista='any';
+        $categoryName = 'childandfamily'; 
+        $videos = Video::selectRaw('max.videos.*, 
+            CASE 
+                WHEN type = 1 THEN "serie" 
+                WHEN type = 2 THEN "pelicula" 
+                ELSE "otro"
+            END as tipo')
+            ->join('max.video_category as vc', 'max.videos.videoid', '=', 'vc.videoid')
+            ->join('max.type_category as tc', 'vc.categoryid', '=', 'tc.categoryid')
+            ->with('categories')
+            ->where('category_name', $categoryName)
+            ->get();
+
+        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'Para ti'],);
+        
+
+    }
+
+
+
+
+
+    public function getVideos()
+    {
+
+    }
+
+
+    public function create()
+    {
+        //
+    }
+
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

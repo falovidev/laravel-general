@@ -36,13 +36,13 @@
             </div>
 
             <div class="button">
-                <a href="/{{$randomVideo['id']}}"><button class="goto">Ir a la pelicula</button></a>
+                <a href="/{{$randomVideo['videoid']}}"><button class="goto">Ir a la {{ ($vista=="any")? $randomVideo['tipo']: $vista}}</button></a>
             </div>
 
         </div>
     </div>
 
-    <div class="subTitle forYou">Películas para ti</div>
+    <div class="subTitle forYou">{{ $typeforYou}}</div>
     <div class="userList">
 
     @foreach ($videos as $video )

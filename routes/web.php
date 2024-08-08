@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\VideoController;
+use Mockery\Undefined;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +38,13 @@ Route::get('/', function () {
 Route::get('/max/{nombrePelicula}', function ($nombrePelicula) {
     return view('play',['nombre' => $nombrePelicula]);
 });
+
+//Route::get('/', [VideoController::class, 'getVideos'])->name('videos.getVideos');
+
+
 Route::get('/', [VideoController::class, 'index'])->name('videos.index');
-Route::get('/{id}', [VideoController::class, 'show'])->name('videos.play');
+Route::get('/play/{id}', [VideoController::class, 'show'])->name('videos.play');
+Route::get('/series', [VideoController::class, 'series'])->name('videos.series');
+Route::get('/movies', [VideoController::class, 'movies'])->name('videos.movies');
+Route::get('/hbo', [VideoController::class, 'hbo'])->name('videos.hbo');
+Route::get('/childandfamily', [VideoController::class, 'childAndFamily'])->name('videos.childandfamily');
