@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Max</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="{{ asset('js/functions.js') }}" defer></script>
+    <script src="{{ asset('js/modalStuff.js') }}" defer></script>
 
 </head>
 
@@ -16,13 +18,13 @@
     @include('_header')
 
     @php
-        use Illuminate\Support\Arr;
-        $randomVideo = Arr::random($videos->toArray());
+    use Illuminate\Support\Arr;
+    $randomVideo = Arr::random($videos->toArray());
     @endphp
 
     <div class="container_preview" style="background-image: url('/img/{{ $randomVideo['name'] }}_preview.webp');">
         <div class="preview">
-        
+
             <div class="imge_title">
                 <div class="img_title"><img src="{{ asset('img/'.$randomVideo['name'].'_title.webp') }}" alt=""></div>
             </div>
@@ -32,7 +34,7 @@
                 <div class="year">{{$randomVideo['year']}}</div>
             </div>
             <div class="description">
-               {{$randomVideo['review']}}
+                {{$randomVideo['review']}}
             </div>
 
             <div class="button">
@@ -43,15 +45,13 @@
     </div>
 
     <div class="subTitle forYou">{{ $typeforYou}}</div>
-    <div class="userList">
 
-    @foreach ($videos as $video )
-    <div class="video"><img src="{{ asset('img/'.$video->name.'_poster.webp') }}"></div>
-        
-    @endforeach
-
-
+    <div id="videoPoster">
+        @include('_videoPoster', [
+        'videos' => $videos
+        ])
     </div>
+
 
     <div class="subTitle continueWatching">Continuar viendo</div>
     <div class="userList">
@@ -60,11 +60,11 @@
             <svg class="play" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff" viewBox="0 0 24 24" role="img">
                 <path d="M6.777 21.482A.5.5 0 0 1 6 21.066V2.934a.5.5 0 0 1 .777-.416l13.599 9.066a.5.5 0 0 1 0 .832z"></path>
             </svg>
-
             <div class="progress_bar">
                 <div class="progress" style="width:70%;"></div>
                 <div class="bar" style="width:30%;"></div>
             </div>
+
 
         </div>
         <div class="video cw"><img src="{{ asset('img/duna_continueWatching.webp') }}"></div>

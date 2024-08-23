@@ -48,3 +48,6 @@ Route::get('/series', [VideoController::class, 'series'])->name('videos.series')
 Route::get('/movies', [VideoController::class, 'movies'])->name('videos.movies');
 Route::get('/hbo', [VideoController::class, 'hbo'])->name('videos.hbo');
 Route::get('/childandfamily', [VideoController::class, 'childAndFamily'])->name('videos.childandfamily');
+Route::get('/stuff', [VideoController::class, 'stuff'])->name('videos.stuff');
+Route::post('/stuff/{videoId}/add', [VideoController::class, 'addStuff'])->name('addStuff.add');
+Route::delete('/stuff/{videoId}/remove', [VideoController::class, 'removeStuff'])->name('stuff.remove');
