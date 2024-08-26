@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Video; 
 use App\Models\MyStuff;
+use App\Models\VideoPlay;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -211,46 +212,23 @@ class VideoController extends Controller
     }
     
 
-    public function getVideos()
-    {
+    public function addContinueWatching($videoId) {
+        
+        $userId = 1;
 
+        VideoPlay::firstOrCreate([
+            'userid' => $userId,
+            'videoid' => $videoId,
+            'time' => 70
+        ]);
+
+        $videos = $this->getFilteredVideos();
+
+        return response()->json([
+            'html' => view('_videoPoster', ['videos' => $videos])->render()
+        ]);
     }
 
 
-    public function create()
-    {
-        //
-    }
 
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

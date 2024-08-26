@@ -1,10 +1,6 @@
 var currentModal = null; // Variable para rastrear el modal actualmente abierto
 
 
-const csrfToken = document
-.querySelector('meta[name="csrf-token"]')
-.getAttribute("content");
-
 function activateModal() {
     // Listener para cada SVG específico
     document.querySelectorAll(".icon_menu_points").forEach(function (svg) {

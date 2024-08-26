@@ -51,3 +51,7 @@ Route::get('/childandfamily', [VideoController::class, 'childAndFamily'])->name(
 Route::get('/stuff', [VideoController::class, 'stuff'])->name('videos.stuff');
 Route::post('/stuff/{videoId}/add', [VideoController::class, 'addStuff'])->name('addStuff.add');
 Route::delete('/stuff/{videoId}/remove', [VideoController::class, 'removeStuff'])->name('stuff.remove');
+
+Route::post('/playvideo/{videoId}/add', [VideoController::class, 'addContinueWatching'])->name('addPlayVideo.add');
+
+// Route::delete('/stuff/{videoId}/remove', [VideoController::class, 'removeStuff'])->name('stuff.remove');

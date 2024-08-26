@@ -1,8 +1,12 @@
-
 <div class="userList">
     @foreach ($videos as $video)
+    @php
+    $urlVideo = route('videos.play', ['id' => $video->videoid]);
+    @endphp
+
     <div class="video">
-        <img src="{{ asset('img/'.$video->name.'_poster.webp') }}">
+        <img id='{{$video->videoid}}' onclick="goPlay('{{$urlVideo  }}')" src="{{ asset('img/'.$video->name.'_poster.webp') }}">
+
 
         <svg id="icon_home_menu_{{ $video->videoid }}" xmlns="http://www.w3.org/2000/svg" fill="#fff" focusable="false" stroke="#fff" viewBox="0 0 24 24" role="img" aria-hidden="true" class="icon_menu_points">
             <g>
