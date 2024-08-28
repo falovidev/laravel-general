@@ -16,7 +16,7 @@ function addStuff(videoId) {
         .then((data) => {
           //  alert(data.html);
             document.getElementById('videoPoster').innerHTML = data.html
-            activateModal()
+            activateModalPoster()
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -38,7 +38,7 @@ function removeVideoFromList(videoId) {
         .then((response) => response.json())
         .then((data) => {
             document.getElementById('videoPoster').innerHTML = data.html
-            activateModal()
+            activateModalPoster()
         })
         .catch((error) => console.error("Error:", error));
 }
@@ -60,14 +60,11 @@ function addContinueWatching(videoid) {
     })
         .then((response) => response.json())
         .then((data) => {
-          //  alert(data.html);
-           // document.getElementById('videoPoster').innerHTML = data.html
-           // activateModal()
+            document.getElementById('buttonsPlay').innerHTML = data.html
         })
         .catch((error) => {
             console.error("Error:", error);
         });
 
-    console.log(videoid);
     
 }

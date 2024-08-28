@@ -41,8 +41,18 @@ class VideoController extends Controller
         $userId =1;
         $videos = $this->getFilteredVideos();
 
+        $videoPlay= Video::selectRaw('*')
+            ->join('max.video_play as vp', 'max.videos.videoid', '=', 'vp.videoid')
+            ->get();
 
-        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'Solo para ti'],);
+    //   return response()->json($videoPlay);
+
+        return view('max', [
+            'videos'=>$videos ,
+            'videoPlay'=>$videoPlay ,
+            'vista'=>$vista , 
+            'typeforYou'=>'Solo para ti'
+        ],);
         
 
     }
@@ -50,11 +60,14 @@ class VideoController extends Controller
 
     public function show($video_id)
     {
-        //
+
+        $userId = 1;
         $videos = Video::find($video_id);//all() seleciona toda la tabla
+        $videoExists = VideoPlay::where('userid', $userId)
+            ->where('videoid', $video_id)
+            ->exists();
 
-
-        return view('play', compact('videos'));//compact pasa los datos a la vista con el metodo view()
+        return view('play', ['videos' => $videos, 'videoExists' =>$videoExists]);//compact pasa los datos a la vista con el metodo view()
 
     }
 
@@ -211,24 +224,32 @@ class VideoController extends Controller
         }
     }
     
-
     public function addContinueWatching($videoId) {
-        
         $userId = 1;
-
-        VideoPlay::firstOrCreate([
-            'userid' => $userId,
-            'videoid' => $videoId,
-            'time' => 70
-        ]);
-
-        $videos = $this->getFilteredVideos();
-
+    
+        // Verificar si el video ya existe
+        $videoExists = VideoPlay::where('userid', $userId)
+            ->where('videoid', $videoId)
+            ->exists();
+    
+        // Si no existe, crearlo
+        if (!$videoExists) {
+            VideoPlay::create([
+                'userid' => $userId,
+                'videoid' => $videoId,
+                'time' => 70
+            ]);
+            $videoExists = true;  // Ahora existe
+        }
+    
+     // Renderizar la vista y devolverla en una respuesta JSON
         return response()->json([
-            'html' => view('_videoPoster', ['videos' => $videos])->render()
+            'html' => view('_buttonsPlay', [
+                'videoExists' => $videoExists
+            ])->render()
         ]);
-    }
 
-
+    
+ }
 
 }

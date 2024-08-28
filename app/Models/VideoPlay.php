@@ -16,7 +16,7 @@ class VideoPlay extends Model
     protected $primaryKey = 'videoplayid';
 
     // Indicar que la clave primaria es un bigint
-    protected $keyType = 'bigint';
+    protected $keyType = 'integer';
 
     // Indicar si la clave primaria es autoincrementable
     public $incrementing = true;
