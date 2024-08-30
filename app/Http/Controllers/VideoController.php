@@ -33,6 +33,24 @@ class VideoController extends Controller
         ->get();
     }
 
+    protected function getVideosPlayed()
+    {
+        $userId =1;
+
+        return Video::selectRaw('*')
+        ->join('max.video_play as vp', 'max.videos.videoid', '=', 'vp.videoid')
+        ->get();
+    }
+
+    protected function getMysStuff()
+    {
+        $userId =1; 
+
+        return Video::selectRaw('*')
+            ->join('max.mystuff as v', 'max.videos.videoid', '=', 'v.videoid')
+            ->get();
+    }
+
 
 
     public function index()
@@ -45,7 +63,7 @@ class VideoController extends Controller
             ->join('max.video_play as vp', 'max.videos.videoid', '=', 'vp.videoid')
             ->get();
 
-    //   return response()->json($videoPlay);
+     // return response()->json($videoPlay);
 
         return view('max', [
             'videos'=>$videos ,
@@ -203,36 +221,59 @@ class VideoController extends Controller
     }
 
     public function removeStuff($videoId) {
-        // Obtener el ID del usuario autenticado
-        $userId = 1; // O usa Auth::id() si la autenticación está habilitada
+       
+        $userId = 1; 
     
-        // Buscar y eliminar el registro correspondiente en la tabla 'mystuff'
         $deleted = MyStuff::where('userid', $userId)
                           ->where('videoid', $videoId)
                           ->delete();
-    
-        // Verificar si se eliminó el registro
+
         if ($deleted) {
 
             $videos = $this->getFilteredVideos();
 
+            
+
             return response()->json([
                 'html' => view('_videoPoster', ['videos' => $videos])->render()
             ]);
+
+
         } else {
             return response()->json(['message' => 'El video no estaba en tu lista'], 404);
         }
     }
+
+    public function removeStuffFromList($videoId) {
+        $userId = 1; 
     
-    public function addContinueWatching($videoId) {
+        $deleted = MyStuff::where('userid', $userId)
+                          ->where('videoid', $videoId)
+                          ->delete();
+
+        if ($deleted) {
+
+            $videos = $this->getMysStuff();
+
+
+            return response()->json([
+                'html' => view('_videoListStuff', ['videos' => $videos])->render()
+            ]);
+
+
+        } else {
+            return response()->json(['message' => 'El video no estaba en tu lista'], 404);
+        }   
+    }
+    
+    public function addPlayvideo($videoId) {
         $userId = 1;
     
-        // Verificar si el video ya existe
+
         $videoExists = VideoPlay::where('userid', $userId)
             ->where('videoid', $videoId)
             ->exists();
-    
-        // Si no existe, crearlo
+
         if (!$videoExists) {
             VideoPlay::create([
                 'userid' => $userId,
@@ -241,8 +282,7 @@ class VideoController extends Controller
             ]);
             $videoExists = true;  // Ahora existe
         }
-    
-     // Renderizar la vista y devolverla en una respuesta JSON
+
         return response()->json([
             'html' => view('_buttonsPlay', [
                 'videoExists' => $videoExists
@@ -251,5 +291,29 @@ class VideoController extends Controller
 
     
  }
+
+ public function removePlayVideo($videoId) {
+
+    $userId = 1; 
+    $deleted = VideoPlay::where('userid', $userId)
+                      ->where('videoid', $videoId)
+                      ->delete();
+
+
+    if ($deleted) {
+
+        $videoPlay = $this->getVideosPlayed();
+
+      // return response()->json($videoPlay);
+
+
+        return response()->json([
+            'html' => view('_videoPlayed', ['videoPlay' => $videoPlay])->render()
+        ]);
+    } else {
+        return response()->json(['message' => 'El video no estaba en tu lista'], 404);
+    }
+}
+
 
 }

@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Mis cosas</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <script src="{{ asset('js/functions.js') }}" defer></script>
+    <script src="{{ asset('js/modalStuff.js') }}" defer></script>
 </head>
 
 <body>
@@ -19,21 +22,22 @@
             <div>Mi lista</div>
             <div>Continuar viendo</div>
         </div>
-        <div class="userList">
-            @foreach ($videos as $video )
-            <div class="video__stuff">
-                <img src="{{ asset('img/'.$video->name.'_continueWatching.webp') }}">
-            </div>
-            @endforeach
+
+        
+        <div id="videoContainer">
+            @include('_videoListStuff', [
+            'videos' => $videos
+            ])
         </div>
+
 
 
         <div class="subTitle forYou">Recomnedados para tí</div>
         <div class="userList recommended">
 
-            @foreach ($videos_foryou as $video_foryou )
-            <div class="video"><img src="{{ asset('img/'.$video_foryou->name.'_poster.webp') }}"></div>
-            @endforeach
+                @include('_videoPoster', [
+                'videos' => $videos_foryou
+                ])
 
 
         </div>

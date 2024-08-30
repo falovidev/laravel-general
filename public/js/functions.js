@@ -16,7 +16,7 @@ function addStuff(videoId) {
         .then((data) => {
           //  alert(data.html);
             document.getElementById('videoPoster').innerHTML = data.html
-            activateModalPoster()
+            activateJs()
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -33,12 +33,54 @@ function removeVideoFromList(videoId) {
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content"),
         },
+        body: JSON.stringify({
+             videoId: videoId 
+            }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById('videoContainer').innerHTML = data.html
+            activateJs()
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
+function removeVideoFromListStuff(videoId) {
+    fetch(`/stuff/${videoId}/remove-from-list`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
         body: JSON.stringify({ videoId: videoId }),
     })
         .then((response) => response.json())
         .then((data) => {
-            document.getElementById('videoPoster').innerHTML = data.html
-            activateModalPoster()
+            document.getElementById('videoContainer').innerHTML = data.html
+            activateJs()
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
+function removeVideoStuff(videoId) {
+    fetch(`/stuff/${videoId}/remove`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+        body: JSON.stringify({ videoId: videoId }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById('videoContainer').innerHTML = data.html
+            activateJs()
         })
         .catch((error) => console.error("Error:", error));
 }
@@ -67,4 +109,22 @@ function addContinueWatching(videoid) {
         });
 
     
+}
+
+function removeContinueWatching(videoId) {
+    fetch(`/playvideo/${videoId}/remove`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": csrfToken,
+        },
+        body: JSON.stringify({ videoId: videoId }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById('videoPlayed').innerHTML = data.html
+            activateJs()
+        })
+        .catch((error) => console.error("Error:", error));
 }

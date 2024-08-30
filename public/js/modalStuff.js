@@ -1,9 +1,9 @@
 var currentModal = null; // Variable para rastrear el modal actualmente abierto
 
-
 function activateModalPoster() {
     // Listener para cada SVG específico
     document.querySelectorAll(".icon_menu_points").forEach(function (svg) {
+
         svg.addEventListener("click", function (event) {
             event.stopPropagation(); // Evitar que el clic se propague y cierre el modal inmediatamente
 
@@ -17,10 +17,10 @@ function activateModalPoster() {
                 "modal_home_nmenu_" + this.id.split("_").pop()
             );
 
-            // Mostrar el modal y posicionarlo debajo del puntero del ratón
             modal_home_nmenu.style.opacity = "1";
             modal_home_nmenu.style.left = 94 + "%";
             modal_home_nmenu.style.top = -68 + "%";
+            modal_home_nmenu.style.pointerEvents = "all";
 
             // Actualizar la referencia al modal actual
             currentModal = modal_home_nmenu;
@@ -35,7 +35,6 @@ function activateModalPoster() {
             currentModal = null; // Reiniciar la referencia al modal actual
         }
     });
-
 
     document
         .querySelectorAll(".menu_option.addStuff")
@@ -59,7 +58,7 @@ function activateModalPoster() {
                 event.stopPropagation();
 
                 const videoId = this.closest(".video")
-                    .querySelector("svg")
+                    ?.querySelector("svg")
                     .id.split("_")
                     .pop();
 
@@ -68,9 +67,9 @@ function activateModalPoster() {
         });
 }
 
-function activateModalContinueWatching() {
+function activateModalStuff() {
     // Listener para cada SVG específico
-    document.querySelectorAll(".icon_menu_points_continue_watching").forEach(function (svg) {
+    document.querySelectorAll(".icon_menu_points.stuff").forEach(function (svg) {
         svg.addEventListener("click", function (event) {
             event.stopPropagation(); // Evitar que el clic se propague y cierre el modal inmediatamente
 
@@ -81,13 +80,13 @@ function activateModalContinueWatching() {
 
             // Obtener el modal específico
             var modal_home_nmenu = document.getElementById(
-                "icon_home_menu_continue_watching_" + this.id.split("_").pop()
+                "modal_home_nmenu_" + this.id.split("_").pop()
             );
 
-            // Mostrar el modal y posicionarlo debajo del puntero del ratón
             modal_home_nmenu.style.opacity = "1";
             modal_home_nmenu.style.left = 94 + "%";
-            modal_home_nmenu.style.top = -68 + "%";
+            modal_home_nmenu.style.top = -48 + "%";
+            modal_home_nmenu.style.pointerEvents = "all";
 
             // Actualizar la referencia al modal actual
             currentModal = modal_home_nmenu;
@@ -104,20 +103,6 @@ function activateModalContinueWatching() {
     });
 
 
-    document
-        .querySelectorAll(".menu_option.addStuff")
-        .forEach(function (option) {
-            option.addEventListener("click", function (event) {
-                event.stopPropagation();
-
-                const videoId = this.closest(".video")
-                    .querySelector("svg")
-                    .id.split("_")
-                    .pop();
-
-               // addStuff(videoId);
-            });
-        });
 
     document
         .querySelectorAll(".menu_option.removeStuff")
@@ -125,21 +110,61 @@ function activateModalContinueWatching() {
             option.addEventListener("click", function (event) {
                 event.stopPropagation();
 
+                const videoId = this.closest(".video__stuff")
+                    .querySelector("svg")
+                    .id.split("_")
+                    .pop();
+
+
+                    console.log(videoId);
+                removeVideoFromListStuff(videoId);
+            });
+        });
+}
+
+function activateModalContinueWatching() {
+    document.querySelectorAll(".icon_menu_points.cw").forEach(function (svg) {
+        svg.addEventListener("click", function (event) {
+            event.stopPropagation(); // Evitar que el clic se propague y cierre el modal inmediatamente
+
+            // Ocultar el modal anterior si está abierto
+            if (currentModal) {
+                currentModal.style.opacity = "0";
+            }
+
+            var modal_home_nmenu = document.getElementById(
+                "modal_home_nmenu_cw_" + this.id.split("_").pop()
+            );
+
+            modal_home_nmenu.style.opacity = "1";
+            modal_home_nmenu.style.left = 94 + "%";
+            modal_home_nmenu.style.top = 12 + "%";
+            modal_home_nmenu.style.pointerEvents = "all";
+
+            currentModal = modal_home_nmenu;
+        });
+    });
+
+    document
+        .querySelectorAll(".menu_option.removeContinueWatching")
+        .forEach(function (option) {
+            option.addEventListener("click", function (event) {
+                event.stopPropagation();
+
                 const videoId = this.closest(".video")
                     .querySelector("svg")
                     .id.split("_")
                     .pop();
 
-               // removeVideoFromList(videoId);
+                removeContinueWatching(videoId);
             });
         });
 }
 
+function activateJs(params) {
+    activateModalPoster();
+    activateModalContinueWatching();
+    activateModalStuff();
+}
 
-
-
-
-
-
-activateModalPoster()
-activateModalContinueWatching()
+activateJs();
