@@ -51,7 +51,17 @@ class VideoController extends Controller
             ->get();
     }
 
+    protected function updateView() {
 
+        $videos = $this->getFilteredVideos();
+        $videos_mystuff = $this->getMysStuff();
+
+        return response()->json([
+            'html_poster' => view('_videoPoster', ['videos' => $videos])->render(),
+            'html_stuff' => view('_videoListStuff', ['videos' => $videos_mystuff])->render()
+        ]);
+
+    }
 
     public function index()
     {
@@ -74,7 +84,6 @@ class VideoController extends Controller
         
 
     }
-
 
     public function show($video_id)
     {
@@ -184,13 +193,7 @@ class VideoController extends Controller
             ->join('max.mystuff as v', 'max.videos.videoid', '=', 'v.videoid')
             ->get();
 
-        $videos_foryou = Video::selectRaw('max.videos.*, 
-            CASE 
-                WHEN type = 1 THEN "serie" 
-                WHEN type = 2 THEN "pelicula" 
-                ELSE "otro"
-            END as tipo')
-        ->get();
+        $videos_foryou = $this->getFilteredVideos();
 
         return view('stuff', [
             'videos' => $videos,
@@ -201,23 +204,16 @@ class VideoController extends Controller
 
     }
 
-
     public function addStuff($videoId) {
         
-        // Obtener el ID del usuario autenticado
-        $userId = 1;//Auth::id();
-
-        // Crear una nueva entrada en la tabla 'mystuff'
+        
+        $userId = 1;
         $mystuff = MyStuff::firstOrCreate([
             'userid' => $userId,
             'videoid' => $videoId
         ]);
 
-        $videos = $this->getFilteredVideos();
-
-        return response()->json([
-            'html' => view('_videoPoster', ['videos' => $videos])->render()
-        ]);
+        return $this->updateView();
     }
 
     public function removeStuff($videoId) {
@@ -228,20 +224,10 @@ class VideoController extends Controller
                           ->where('videoid', $videoId)
                           ->delete();
 
-        if ($deleted) {
 
-            $videos = $this->getFilteredVideos();
-
-            
-
-            return response()->json([
-                'html' => view('_videoPoster', ['videos' => $videos])->render()
-            ]);
+        return $this->updateView();
 
 
-        } else {
-            return response()->json(['message' => 'El video no estaba en tu lista'], 404);
-        }
     }
 
     public function removeStuffFromList($videoId) {
@@ -253,13 +239,7 @@ class VideoController extends Controller
 
         if ($deleted) {
 
-            $videos = $this->getMysStuff();
-
-
-            return response()->json([
-                'html' => view('_videoListStuff', ['videos' => $videos])->render()
-            ]);
-
+            return $this->updateView();
 
         } else {
             return response()->json(['message' => 'El video no estaba en tu lista'], 404);
@@ -278,7 +258,7 @@ class VideoController extends Controller
             VideoPlay::create([
                 'userid' => $userId,
                 'videoid' => $videoId,
-                'time' => 70
+                'time' => mt_rand(0, 100)
             ]);
             $videoExists = true;  // Ahora existe
         }
@@ -290,30 +270,30 @@ class VideoController extends Controller
         ]);
 
     
- }
-
- public function removePlayVideo($videoId) {
-
-    $userId = 1; 
-    $deleted = VideoPlay::where('userid', $userId)
-                      ->where('videoid', $videoId)
-                      ->delete();
-
-
-    if ($deleted) {
-
-        $videoPlay = $this->getVideosPlayed();
-
-      // return response()->json($videoPlay);
-
-
-        return response()->json([
-            'html' => view('_videoPlayed', ['videoPlay' => $videoPlay])->render()
-        ]);
-    } else {
-        return response()->json(['message' => 'El video no estaba en tu lista'], 404);
     }
-}
+
+    public function removePlayVideo($videoId) {
+
+        $userId = 1; 
+        $deleted = VideoPlay::where('userid', $userId)
+                        ->where('videoid', $videoId)
+                        ->delete();
+
+
+        if ($deleted) {
+
+            $videoPlay = $this->getVideosPlayed();
+
+        // return response()->json($videoPlay);
+
+
+            return response()->json([
+                'html' => view('_videoPlayed', ['videoPlay' => $videoPlay])->render()
+            ]);
+        } else {
+            return response()->json(['message' => 'El video no estaba en tu lista'], 404);
+        }
+    }
 
 
 }

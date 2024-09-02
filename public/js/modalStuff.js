@@ -2,8 +2,9 @@ var currentModal = null; // Variable para rastrear el modal actualmente abierto
 
 function activateModalPoster() {
     // Listener para cada SVG específico
-    document.querySelectorAll(".icon_menu_points").forEach(function (svg) {
+    document.querySelectorAll(".icon_menu_points.poster").forEach(function (svg) {
 
+        
         svg.addEventListener("click", function (event) {
             event.stopPropagation(); // Evitar que el clic se propague y cierre el modal inmediatamente
 
@@ -14,7 +15,7 @@ function activateModalPoster() {
 
             // Obtener el modal específico
             var modal_home_nmenu = document.getElementById(
-                "modal_home_nmenu_" + this.id.split("_").pop()
+                "modal_home_nmenu_poster_" + this.id.split("_").pop()
             );
 
             modal_home_nmenu.style.opacity = "1";
@@ -52,7 +53,7 @@ function activateModalPoster() {
         });
 
     document
-        .querySelectorAll(".menu_option.removeStuff")
+        .querySelectorAll(".menu_option.removeStuff.poster")
         .forEach(function (option) {
             option.addEventListener("click", function (event) {
                 event.stopPropagation();
@@ -71,6 +72,7 @@ function activateModalStuff() {
     // Listener para cada SVG específico
     document.querySelectorAll(".icon_menu_points.stuff").forEach(function (svg) {
         svg.addEventListener("click", function (event) {
+            console.log('stuff');
             event.stopPropagation(); // Evitar que el clic se propague y cierre el modal inmediatamente
 
             // Ocultar el modal anterior si está abierto
@@ -105,7 +107,7 @@ function activateModalStuff() {
 
 
     document
-        .querySelectorAll(".menu_option.removeStuff")
+        .querySelectorAll(".menu_option.removeStuff.listStuff")
         .forEach(function (option) {
             option.addEventListener("click", function (event) {
                 event.stopPropagation();

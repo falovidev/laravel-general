@@ -23,8 +23,8 @@
             <div>Continuar viendo</div>
         </div>
 
-        
-        <div id="videoContainer">
+
+        <div id="videoStuff">
             @include('_videoListStuff', [
             'videos' => $videos
             ])
@@ -33,11 +33,11 @@
 
 
         <div class="subTitle forYou">Recomnedados para tí</div>
-        <div class="userList recommended">
+        <div id="videoPoster" class="recommended">
 
-                @include('_videoPoster', [
-                'videos' => $videos_foryou
-                ])
+            @include('_videoPoster', [
+            'videos' => $videos_foryou
+            ])
 
 
         </div>

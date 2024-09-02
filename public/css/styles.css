@@ -417,6 +417,10 @@ h1.title_page {
     flex-wrap: nowrap;
 }
 
+.recommended .userList {
+    border: 0;
+}
+
 .sub_menu {
     color: white;
     display: flex;

@@ -12,7 +12,7 @@
     </svg>
 
     <div id="modal_home_nmenu_{{ $video->videoid }}" style="opacity: 0;" class="modal_menu">
-        <div class="menu_option removeStuff">
+        <div class="menu_option removeStuff listStuff">
             <div class="icon_modal">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" focusable="false" stroke="#fff" viewBox="0 0 20 20" role="img" aria-hidden="true" class="StyledIcon-Beam-Web-Ent__sc-f0xyuv-0 hhqjpC StyledListItemIconLeft-Beam-Web-Ent__sc-1dhwxqj-4 iKCDjd">
                     <path clip-rule="evenodd" d="M17.182 5.289a.75.75 0 0 1 .03 1.06L8 16.092 2.79 10.58a.75.75 0 1 1 1.09-1.03L8 13.907l8.122-8.59a.75.75 0 0 1 1.06-.03z" fill-rule="evenodd"></path>
