@@ -55,3 +55,6 @@ Route::delete('/stuff/{videoId}/remove-from-list', [VideoController::class, 'rem
 
 Route::post('/playvideo/{videoId}/add', [VideoController::class, 'addPlayvideo'])->name('playVideo.add');
 Route::delete('/playvideo/{videoId}/remove', [VideoController::class, 'removePlayvideo'])->name('playVideo.remove');
+
+Route::post('/playvideo/{videoId}/played', [VideoController::class, 'playedPlayvideo'])->name('playVideo.played');
+

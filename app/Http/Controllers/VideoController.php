@@ -5,6 +5,7 @@ use App\Models\Video;
 use App\Models\MyStuff;
 use App\Models\VideoPlay;
 use Illuminate\Http\Request;
+use Mockery\Undefined;
 
 class VideoController extends Controller
 {
@@ -56,9 +57,11 @@ class VideoController extends Controller
         $videos = $this->getFilteredVideos();
         $videos_mystuff = $this->getMysStuff();
 
+
+
         return response()->json([
-            'html_poster' => view('_videoPoster', ['videos' => $videos])->render(),
-            'html_stuff' => view('_videoListStuff', ['videos' => $videos_mystuff])->render()
+            'html_poster' => view('partial._videoPoster', ['videos' => $videos])->render(),
+            'html_stuff' => view('partial._videoListStuff', ['videos' => $videos_mystuff])->render()
         ]);
 
     }
@@ -73,7 +76,6 @@ class VideoController extends Controller
             ->join('max.video_play as vp', 'max.videos.videoid', '=', 'vp.videoid')
             ->get();
 
-     // return response()->json($videoPlay);
 
         return view('max', [
             'videos'=>$videos ,
@@ -92,9 +94,20 @@ class VideoController extends Controller
         $videos = Video::find($video_id);//all() seleciona toda la tabla
         $videoExists = VideoPlay::where('userid', $userId)
             ->where('videoid', $video_id)
-            ->exists();
+            ->get();
 
-        return view('play', ['videos' => $videos, 'videoExists' =>$videoExists]);//compact pasa los datos a la vista con el metodo view()
+
+       // return response()->json([$videoExists]);
+
+        if(isset($videoExists[0])) {
+            $videoExists = $videoExists[0];
+        } else {
+            $videoExists = false;
+        }
+
+
+        return view('play', ['videos' => $videos, 'videoExists' =>$videoExists]);
+        
 
     }
 
@@ -213,6 +226,7 @@ class VideoController extends Controller
             'videoid' => $videoId
         ]);
 
+
         return $this->updateView();
     }
 
@@ -264,7 +278,7 @@ class VideoController extends Controller
         }
 
         return response()->json([
-            'html' => view('_buttonsPlay', [
+            'html' => view('partial._buttonsPlay', [
                 'videoExists' => $videoExists
             ])->render()
         ]);
@@ -288,12 +302,31 @@ class VideoController extends Controller
 
 
             return response()->json([
-                'html' => view('_videoPlayed', ['videoPlay' => $videoPlay])->render()
+                'html' => view('partial._videoPlayed', ['videoPlay' => $videoPlay])->render()
             ]);
         } else {
             return response()->json(['message' => 'El video no estaba en tu lista'], 404);
         }
     }
 
+    public function playedPlayvideo($videoId)
+    {
+
+        //echo $videoId;
+
+        $userId = 1;
+        VideoPlay::where('userid', $userId)
+            ->where('videoid', $videoId)
+            ->update(['time' => mt_rand(0, 100)]);
+
+        $videoPlay = VideoPlay::where('userid', $userId)
+            ->where('videoid', $videoId)
+            ->first();
+
+
+        return response()->json([
+            'html' => view('partial._buttonsPlay', ['videoExists' => $videoPlay])->render()
+        ]);
+    }            
 
 }

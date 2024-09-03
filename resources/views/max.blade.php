@@ -15,7 +15,7 @@
 <body>
 
 
-    @include('_header')
+    @include('partial._header')
 
     @php
     use Illuminate\Support\Arr;
@@ -40,20 +40,20 @@
             <div class="button">
                 <a href="/{{$randomVideo['videoid']}}"><button class="goto">Ir a la {{ ($vista=="any")? $randomVideo['tipo']: $vista}}</button></a>
             </div>
-
+>
         </div>
     </div>
 
 
     <div class="subTitle forYou">{{ $typeforYou}}</div>
     <div id="videoPoster">
-        @include('_videoPoster', [
+        @include('partial._videoPoster', [
         'videos' => $videos
         ])
     </div>
 
     <div id="videoPlayed">
-        @include('_videoPlayed', [
+        @include('partial._videoPlayed', [
         'videoPlay' => $videoPlay
         ])
     </div>

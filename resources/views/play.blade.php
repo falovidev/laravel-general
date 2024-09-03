@@ -14,7 +14,7 @@
 <body>
 
 
-    @include('_header')
+    @include('partial._header')
     <div class="container_preview" style="background-image: url('/img/{{ $videos->name }}_preview.webp');">
         <div class="preview pPlay">
 
@@ -28,7 +28,7 @@
             </div>
 
             <div id="buttonsPlay" class="buttons">
-                @include('_buttonsPlay', [
+                @include('partial._buttonsPlay', [
                 'videoExists' => $videoExists
                 ])
             </div>

@@ -45,8 +45,8 @@
             <path d="M6.777 21.482A.5.5 0 0 1 6 21.066V2.934a.5.5 0 0 1 .777-.416l13.599 9.066a.5.5 0 0 1 0 .832z"></path>
         </svg>
         <div class="progress_bar">
-            <div class="progress" style="width:70%;"></div>
-            <div class="bar" style="width:30%;"></div>
+            <div class="progress" style="width:{{ $videoCw->time }}%;"></div>
+            <div class="bar" style="width:{{ 100 - $videoCw->time }}%;"></div>
         </div>
 
     </div>

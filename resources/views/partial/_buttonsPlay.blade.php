@@ -11,7 +11,7 @@
                                     </svg>
                                 </div>
                                 <div class="playStart">
-                                    <div class="">Ver ahora </div>
+                                    <div class="">Ver ahora</div>
                                 </div>
                             </div>
                         </button>
@@ -22,7 +22,7 @@
                     
                 <div class="playRestart buttons" >
                     <div class="play">
-                        <button>
+                        <button onclick="playContinueWatching('{{$videos->videoid}}')">
                             <div class="buttonStart">
                                 <div class="svgPlay">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#000" stroke="#fff" viewBox="0 0 20 20" role="img" aria-hidden="true" class="StyledIcon-Beam-Web-Ent__sc-f0xyuv-0 geJlZY" style="height: 25px; width: 25px;">
@@ -32,8 +32,8 @@
                                 <div class="playStart">
                                     <div class="rStart">Reanudar</div>
                                     <div class="progress_bar">
-                                        <div class="progress__Play" style="width:70%;"></div>
-                                        <div class="bar__Play" style="width:30%;"></div>
+                                        <div class="progress__Play" style="width:{{$videoExists->time}}%;"></div>
+                                        <div class="bar__Play" style="width:{{100 - $videoExists->time}}%;"></div>
                                     </div>
                                 </div>
                             </div>

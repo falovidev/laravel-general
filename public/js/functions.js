@@ -19,10 +19,14 @@ function addStuff(videoId) {
     fetch(`/stuff/${videoId}/add`, {
         method: "POST",
         headers:headers,
+        body: JSON.stringify({
+            videoId: videoId,
+        }),
     })
         .then((response) => response.json())
         .then((data) => {
-            updateView(data);
+            console.log(data);
+           // updateView(data);
             activateJs();
         })
         .catch((error) => {
@@ -102,6 +106,21 @@ function removeContinueWatching(videoId) {
         .then((data) => {
             document.getElementById("videoPlayed").innerHTML = data.html;
             activateJs();
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
+function playContinueWatching(videoId) {
+    fetch(`/playvideo/${videoId}/played`, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({ videoId: videoId }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data.html);
+            //document.getElementById("buttonsPlay").innerHTML = data.html;
+           // activateJs();
         })
         .catch((error) => console.error("Error:", error));
 }

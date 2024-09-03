@@ -13,7 +13,7 @@
 
 <body>
 
-    @include('_header')
+    @include('partial._header')
 
     <div class="layout_stuff">
         <h1 class="title_page">Mis Cosas</h1>
@@ -25,7 +25,7 @@
 
 
         <div id="videoStuff">
-            @include('_videoListStuff', [
+            @include('partial._videoListStuff', [
             'videos' => $videos
             ])
         </div>
@@ -35,7 +35,7 @@
         <div class="subTitle forYou">Recomnedados para tí</div>
         <div id="videoPoster" class="recommended">
 
-            @include('_videoPoster', [
+            @include('partial._videoPoster', [
             'videos' => $videos_foryou
             ])
 
