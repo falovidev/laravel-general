@@ -43,15 +43,17 @@ Route::get('/max/{nombrePelicula}', function ($nombrePelicula) {
 
 
 Route::get('/', [VideoController::class, 'index'])->name('videos.index');
-Route::get('/play/{id}', [VideoController::class, 'show'])->name('videos.play');
+Route::get('/play/{id}', [VideoController::class, 'viewPlay'])->name('videos.play');
 Route::get('/series', [VideoController::class, 'series'])->name('videos.series');
 Route::get('/movies', [VideoController::class, 'movies'])->name('videos.movies');
 Route::get('/hbo', [VideoController::class, 'hbo'])->name('videos.hbo');
 Route::get('/childandfamily', [VideoController::class, 'childAndFamily'])->name('videos.childandfamily');
+
 Route::get('/stuff', [VideoController::class, 'stuff'])->name('videos.stuff');
 Route::post('/stuff/{videoId}/add', [VideoController::class, 'addStuff'])->name('addStuff.add');
 Route::delete('/stuff/{videoId}/remove', [VideoController::class, 'removeStuff'])->name('stuff.remove');
 Route::delete('/stuff/{videoId}/remove-from-list', [VideoController::class, 'removeStuffFromList'])->name('stuff.removeFromList');
+Route::post('/stuff/{videoId}/toogle', [VideoController::class, 'toggleStuff'])->name('stuff.toogle');
 
 Route::post('/playvideo/{videoId}/add', [VideoController::class, 'addPlayvideo'])->name('playVideo.add');
 Route::delete('/playvideo/{videoId}/remove', [VideoController::class, 'removePlayvideo'])->name('playVideo.remove');

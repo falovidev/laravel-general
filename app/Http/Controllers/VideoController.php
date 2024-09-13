@@ -49,8 +49,29 @@ class VideoController extends Controller
 
         return Video::selectRaw('*')
             ->join('max.mystuff as v', 'max.videos.videoid', '=', 'v.videoid')
+            ->where('v.userid', $userId)
             ->get();
     }
+
+    protected function getMysStuffbyId($videoId)
+    {
+        $userId = 1;
+
+        return Video::selectRaw('max.videos.*,
+        CASE 
+            WHEN m.userid IS NOT NULL THEN "stuff" 
+            ELSE "no_stuff"
+        END as status
+        ')
+        ->leftJoin('max.mystuff as m', 'max.videos.videoid', '=', 'm.videoid')
+        ->where('max.videos.videoid', $videoId)
+            ->where(function ($query) use ($userId) {
+                $query->where('m.userid', $userId)
+                    ->orWhereNull('m.userid');
+            })
+            ->get();
+    }
+    
 
     protected function updateView() {
 
@@ -87,11 +108,11 @@ class VideoController extends Controller
 
     }
 
-    public function show($video_id)
+    public function viewPlay($video_id)
     {
 
         $userId = 1;
-        $videos = Video::find($video_id);//all() seleciona toda la tabla
+        $videos = $this->getMysStuffbyId($video_id);
         $videoExists = VideoPlay::where('userid', $userId)
             ->where('videoid', $video_id)
             ->get();
@@ -106,7 +127,7 @@ class VideoController extends Controller
         }
 
 
-        return view('play', ['videos' => $videos, 'videoExists' =>$videoExists]);
+        return view('play', ['videos' => $videos[0], 'videoExists' =>$videoExists]);
         
 
     }
@@ -274,12 +295,15 @@ class VideoController extends Controller
                 'videoid' => $videoId,
                 'time' => mt_rand(0, 100)
             ]);
-            $videoExists = true;  // Ahora existe
         }
+
+        $videoExists = VideoPlay::where('userid', $userId)
+        ->where('videoid', $videoId)
+        ->get();
 
         return response()->json([
             'html' => view('partial._buttonsPlay', [
-                'videoExists' => $videoExists
+                'videoExists' => $videoExists[0]
             ])->render()
         ]);
 
@@ -312,7 +336,6 @@ class VideoController extends Controller
     public function playedPlayvideo($videoId)
     {
 
-        //echo $videoId;
 
         $userId = 1;
         VideoPlay::where('userid', $userId)
@@ -327,6 +350,46 @@ class VideoController extends Controller
         return response()->json([
             'html' => view('partial._buttonsPlay', ['videoExists' => $videoPlay])->render()
         ]);
-    }            
+    }   
+    
+    public function toggleStuff($videoId) {
+        
+        $userId = 1;
+        $deleted = MyStuff::where('userid', $userId)
+                          ->where('videoid', $videoId)
+                          ->delete();   
+
+
+
+        if (!$deleted) {
+
+
+            $videoExists = MyStuff::where('userid', $userId)
+                ->where('videoid', $videoId)
+                ->exists();
+
+            if (!$videoExists) {
+
+
+                MyStuff::create([
+                    'userid' => $userId,
+                    'videoid' => $videoId
+                ]);
+            }
+
+            
+        }
+
+        $videos = $this->getMysStuffbyId($videoId);
+
+        
+        return response()->json([
+             'html_buttonToggleStuff' => view('partial._buttonToggleStuff', ['videos' => $videos[0]])->render()
+        ]);
+
+
+
+        
+    }   
 
 }

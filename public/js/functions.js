@@ -8,8 +8,11 @@ const  headers =  {
 } 
 
 function updateView(data) {
+    console.log(data.html_buttonToggleStuff);
     var videoStuff = document.getElementById("videoStuff");
     var videoPoster = document.getElementById("videoPoster");
+    var buttonToggleStuff = document.getElementById("buttonToggleStuff");
+    buttonToggleStuff ? (buttonToggleStuff.innerHTML = data.html_buttonToggleStuff) : false;
     videoStuff ? (videoStuff.innerHTML = data.html_stuff) : false;
     videoPoster ? (videoPoster.innerHTML = data.html_poster) : false;
 }
@@ -26,7 +29,7 @@ function addStuff(videoId) {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-           // updateView(data);
+            updateView(data);
             activateJs();
         })
         .catch((error) => {
@@ -118,8 +121,25 @@ function playContinueWatching(videoId) {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data.html);
-            //document.getElementById("buttonsPlay").innerHTML = data.html;
+            document.getElementById("buttonsPlay").innerHTML = data.html;
+           // activateJs();
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
+
+function toogleStuff(videoId) {
+
+    console.log(videoId);
+
+    fetch(`/stuff/${videoId}/toogle`, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({ videoId: videoId }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            updateView(data);
            // activateJs();
         })
         .catch((error) => console.error("Error:", error));

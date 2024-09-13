@@ -22,7 +22,7 @@
                     
                 <div class="playRestart buttons" >
                     <div class="play">
-                        <button onclick="playContinueWatching('{{$videos->videoid}}')">
+                        <button onclick="playContinueWatching('{{$videoExists->videoid}}')">
                             <div class="buttonStart">
                                 <div class="svgPlay">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#000" stroke="#fff" viewBox="0 0 20 20" role="img" aria-hidden="true" class="StyledIcon-Beam-Web-Ent__sc-f0xyuv-0 geJlZY" style="height: 25px; width: 25px;">
