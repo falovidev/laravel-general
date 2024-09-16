@@ -192,7 +192,7 @@ class VideoController extends Controller
             ->get();
       //  return response()->json($videos);
 
-        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'HBO para ti'],);//compact('videos'))->with('vista', $vista);//compact pasa los datos a la vista con el metodo view()
+        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'HBO para ti'],);
         
 
     }
@@ -360,7 +360,6 @@ class VideoController extends Controller
                           ->delete();   
 
 
-
         if (!$deleted) {
 
 
@@ -369,19 +368,15 @@ class VideoController extends Controller
                 ->exists();
 
             if (!$videoExists) {
-
-
                 MyStuff::create([
                     'userid' => $userId,
                     'videoid' => $videoId
                 ]);
             }
-
             
         }
 
         $videos = $this->getMysStuffbyId($videoId);
-
         
         return response()->json([
              'html_buttonToggleStuff' => view('partial._buttonToggleStuff', ['videos' => $videos[0]])->render()

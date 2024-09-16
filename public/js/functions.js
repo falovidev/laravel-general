@@ -8,7 +8,6 @@ const  headers =  {
 } 
 
 function updateView(data) {
-    console.log(data.html_buttonToggleStuff);
     var videoStuff = document.getElementById("videoStuff");
     var videoPoster = document.getElementById("videoPoster");
     var buttonToggleStuff = document.getElementById("buttonToggleStuff");

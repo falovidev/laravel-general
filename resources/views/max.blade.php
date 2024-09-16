@@ -14,14 +14,14 @@
 
 <body>
 
-
-    @include('partial._header')
-
     @php
     use Illuminate\Support\Arr;
     $randomVideo = Arr::random($videos->toArray());
     @endphp
+    
 
+    @include('partial._header')
+    
     <div class="container_preview" style="background-image: url('/img/{{ $randomVideo['name'] }}_preview.webp');">
         <div class="preview">
 
@@ -38,7 +38,7 @@
             </div>
 
             <div class="button">
-                <a href="/{{$randomVideo['videoid']}}"><button class="goto">Ir a la {{ ($vista=="any")? $randomVideo['tipo']: $vista}}</button></a>
+                <a href="play/{{$randomVideo['videoid']}}"><button class="goto">Ir a la {{ ($vista=="any")? $randomVideo['tipo']: $vista}}</button></a>
             </div>
 >
         </div>
@@ -52,11 +52,13 @@
         ])
     </div>
 
+    @if (isset($videoPlay))
     <div id="videoPlayed">
         @include('partial._videoPlayed', [
         'videoPlay' => $videoPlay
         ])
     </div>
+    @endif
 
 
 
