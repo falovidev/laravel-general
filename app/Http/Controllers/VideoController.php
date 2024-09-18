@@ -92,6 +92,7 @@ class VideoController extends Controller
         $vista='any';
         $userId =1;
         $videos = $this->getFilteredVideos();
+        $nameView = 'home';
 
         $videoPlay= Video::selectRaw('*')
             ->join('max.video_play as vp', 'max.videos.videoid', '=', 'vp.videoid')
@@ -102,7 +103,8 @@ class VideoController extends Controller
             'videos'=>$videos ,
             'videoPlay'=>$videoPlay ,
             'vista'=>$vista , 
-            'typeforYou'=>'Solo para ti'
+            'typeforYou'=>'Solo para ti',
+            'nameView' => $nameView
         ],);
         
 
@@ -127,7 +129,7 @@ class VideoController extends Controller
         }
 
 
-        return view('play', ['videos' => $videos[0], 'videoExists' =>$videoExists]);
+        return view('play', ['videos' => $videos[0], 'videoExists' =>$videoExists, 'nameView' => 'play']);
         
 
     }
@@ -143,7 +145,7 @@ class VideoController extends Controller
 
         
 
-        return view('max', ['videos' => $videos, 'vista' => 'serie','typeforYou' => 'Series para ti']);
+        return view('max', ['videos' => $videos, 'vista' => 'serie','typeforYou' => 'Series para ti', 'nameView' => 'series']);
 
     }
 
@@ -159,7 +161,7 @@ class VideoController extends Controller
 
         
 
-        return view('max', ['videos' => $videos, 'vista' => 'película', 'typeforYou' => 'Peliculas para ti']);
+        return view('max', ['videos' => $videos, 'vista' => 'película', 'typeforYou' => 'Peliculas para ti', 'nameView' => 'movies']);
 
     }
 
@@ -192,7 +194,7 @@ class VideoController extends Controller
             ->get();
       //  return response()->json($videos);
 
-        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'HBO para ti'],);
+        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'HBO para ti', 'nameView' => 'hbo'],);
         
 
     }
@@ -214,7 +216,7 @@ class VideoController extends Controller
             ->where('category_name', $categoryName)
             ->get();
 
-        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'Para ti'],);
+        return view('max', ['videos'=>$videos ,'vista'=>$vista , 'typeforYou'=>'Para ti', 'nameView' => 'childandfamily'],);
         
 
     }
@@ -228,12 +230,14 @@ class VideoController extends Controller
             ->get();
 
         $videos_foryou = $this->getFilteredVideos();
+        $nameView = 'stuff';
 
         return view('stuff', [
             'videos' => $videos,
             'vista' => $vista,
             'typeforYou' => 'Para ti',
-            'videos_foryou' => $videos_foryou
+            'videos_foryou' => $videos_foryou,
+            'nameView' => $nameView
         ]);
 
     }

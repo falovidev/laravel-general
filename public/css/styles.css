@@ -495,3 +495,9 @@ svg {
 }
 
 a {text-decoration: none;color: inherit;}
+
+.view_selected {
+    text-decoration: underline;
+    text-underline-offset: 12px;
+    text-decoration-thickness: 2px;
+}
